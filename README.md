@@ -35,7 +35,7 @@ All credentials and settings are passed via environment variables — never hard
 | `SMTP_SERVER` | no | SMTP host (default: `smtp.gmail.com`) |
 | `SMTP_PORT` | no | SMTP port for SSL (default: `465`) |
 
-Export them in your shell or put them in a `.env` file (which is gitignored):
+Export them in your shell, or put them in a `.env` file (loaded automatically by the shell scripts — add `.env` to your `.gitignore` to keep credentials out of version control):
 
 ```bash
 export RESPEKT_USERNAME='your@email.com'
@@ -86,7 +86,7 @@ EPUBs are saved under `<save-path>/<year>/` with names like `respekt_2024_42.epu
 
 ## Shell helper scripts
 
-Two ready-made scripts are included:
+Two ready-made scripts are included. Both automatically `source .env` from the working directory before running.
 
 | Script | Purpose |
 |---|---|
@@ -97,19 +97,18 @@ Configure them via the env vars listed above plus:
 
 | Variable | Default | Description |
 |---|---|---|
-| `SAVE_PATH` | `./epubs` | Where to store downloaded files |
+| `SAVE_PATH` | — | Where to store downloaded files |
 | `RECIPIENTS` | — | Semicolon-separated email recipients |
 | `KINDLE_RECIPIENTS` | — | Semicolon-separated Kindle addresses |
-| `YEAR_FROM` / `YEAR_TO` | `2023` | Year range for bulk download |
+| `YEAR_FROM` | `2023` | Start year for bulk download (`download_historical.sh`) |
+| `YEAR_TO` | `2025` | End year for bulk download (`download_historical.sh`) |
 
 ### Automating with cron
 
 ```cron
 # Every Wednesday at 07:00
-0 7 * * 3 RESPEKT_USERNAME=... RESPEKT_PASSWORD=... ... /path/to/download_and_sent_latest.sh
+0 7 * * 3 path/to/respekt_scraper/download_and_sent_latest.sh
 ```
-
-Or source a `.env` file at the top of the script before running it.
 
 ## License
 
